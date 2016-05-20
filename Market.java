@@ -20,7 +20,6 @@ public class Market {
 		prods.add(new Product(2,"Banana",100,1.5));
 		prods.add(new Product(3,"Coke",200,1.8));
 		for(int i=0;i<prods.size();i++){
-			prods.get(i).generateQty();
 			prods.get(i).setShelfQty(80);
 		}
 	}
@@ -119,6 +118,8 @@ public class Market {
 //			}
 //			if(product!=null){
 				this.sale=new Sale(customer,prods);
+				this.sale.realTotalPrice(customer);
+//		           pList.get(i-1).setLeftQuantity(this.sale);
 //				System.out.println("Enter the quantity you want to purchase: ");
 //				int q=scan.nextInt();
 //				if(q<=product.getShelfQty()){
@@ -227,6 +228,7 @@ public class Market {
 		do{
 			System.out.println();
 			menu();
+			System.out.print("Please enter your choice : ");
 			m=scan.nextInt();
 			switch(m){
 			case 1 : showProduct();break;
