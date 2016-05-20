@@ -104,6 +104,7 @@ public class Product {
 	private ArrayList<SalesLineItem> salesLines = new ArrayList<SalesLineItem>();
 	private double wholesaleItemPrice;
 	private int wholesaleItemQty;
+	public double totalRevenue;
 
 	public Product(int id,String name, double itemPrice, int quantity1, int quantity2, double wholesaleItemPrice,
 			int wholesaleItemQty) {
@@ -132,6 +133,29 @@ public class Product {
 		this.replenishLevel=qty;
 		return replenishLevel;
 	}
+	public void setStock(int amount1){
+		{
+			double amount=amount1;
+			Scanner reader=new Scanner(System.in);
+			do{     
+				System.out.println("Not enough items on shelf, current total amount is "+ this.shelfQty);
+				amount=reader.nextDouble();
+//			else{	
+//			System.out.println("There are not enough items left, try to buy all items");
+//			shelfQty=0;
+			}while(amount>shelfQty);
+			this.shelfQty -= amount;
+			if(this.shelfQty==0){
+				this.shelfQty=100;
+				this.stockQty-=100;
+			}
+			if(this.stockQty<=200){
+				System.out.println("stock level low, reorder now, current stock amount is "+ this.stockQty);
+				this.reorder(800);//automatically reorder if below 200 and replenish the stock to 1000
+			}
+		}
+	}
+
 	
 	public void generateQty(){
 		if(shelfQty<replenishLevel&&stockQty+shelfQty>=replenishLevel){

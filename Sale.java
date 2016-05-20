@@ -42,29 +42,23 @@ class Sale
    }
 
    public Sale(Customer c, ArrayList<Product> pList)
-   {
-//        System.out.print("Enter Sale ID : ");
-//        ID=scan.nextInt();
-//        for (int i=0;i<cList.size();i++)
-//           System.out.println("  " +i+ "  "+cList.get(i).getName());    
+   {    
         int i;  
-//        do{      
-//             System.out.print("Enter Customer ID : ");
-//             i=scan.nextInt();
-//        } while(i<0||i>=cList.size());
-//        this.c = cList.get(i);
         String response;       
         do{
-           for (i=0;i<pList.size();i++)
-              System.out.println("   "+ (i+1)+ "   "+ pList.get(i).getName());
-           do{      
-             System.out.print("Enter Product ID : ");
-             i=scan.nextInt();
-           }while (i<1||i>pList.size());
-           System.out.print("Enter 	qty : ");
+        	System.out.println("\tProduct ID\tProduct Name\tUnit Price\tQuantity Left");
+    		for(i=0;i<pList.size();i++){
+    			System.out.println("\t"+pList.get(i).getID()+"\t\t"+pList.get(i).getName()+"\t\t"+pList.get(i).getItemPrice()+"\t\t"+pList.get(i).getShelfQty());
+    		}
+//        	for(i=0;i<pList.size();i++)
+//        		System.out.println("   "+ (i+1)+ "   "+ pList.get(i).getName());
+        	do{      
+        		System.out.print("Enter Product ID : ");
+        		i=scan.nextInt();
+           }while(i<1||i>pList.size());
+           System.out.print("Enter qty : ");
            int qty=scan.nextInt();
            list.add(new SalesLineItem(pList.get(i-1),qty,this));
-           pList.get(i-1).setLeftQuantity(this);
            scan.nextLine();
            System.out.print("Any more items ? : Y/N");
            response = scan.nextLine();
@@ -73,8 +67,12 @@ class Sale
 
    public void computeTotalPrice() // calculate the total price
    {
-           for(int i=0;i<list.size();i++)
-        	   totalPrice+=list.get(i).getPrice(); 
+           for(int i=0;i<list.size();i++){
+        	   totalPrice+=list.get(i).getPrice();
+        	   list.get(i).getProduct().totalRevenue+=list.get(i).getPrice();
+        	   list.get(i).getProduct().setLeftQuantity(this);
+           }
+           
 //add price*unitPrice: product.getPrice(); will calculate wholesale price itself
 //           this.totalPrice = getDisVal(totalPrice); //
    }
