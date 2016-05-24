@@ -23,16 +23,18 @@ public class Market {
 		emps.add(new WarehouseStaff("Ray","007","pass"));
 		emps.add(new SalesStaff("David","3","pass"));
 		
-		prods.add(new Product(1,"Apple",10000,2.0));
-		prods.add(new Product(2,"Banana",10000,1.5));
-		prods.add(new Product(3,"Coke",20000,1.8));
-		prods.add(new Product(4,"Donut",20000,3));
-		prods.add(new Product(5,"Egg",20000, 4));
-		prods.add(new Product(6,"Chips",20000,3.5));
+		prods.add(new Product(1,"Apple",5000,2.0));
+		prods.add(new Product(2,"Banana",5000,1.5));
+		prods.add(new Product(3,"Coke",5000,1.8));
+		prods.add(new Product(4,"Donut",5000,3));
+		prods.add(new Product(5,"Egg",5000, 4));
+		prods.add(new Product(6,"Chips",5000,3.5));
 		
 		for(int i=0;i<prods.size();i++){
+
 			prods.get(i).setShelfQty(2000);
 			prods.get(i).setWholesaleItemQty(2000);
+			prods.get(i).totalOrder=prods.get(i).getShelfQty()+prods.get(i).getStockQty();
 		}
 	}
 	
@@ -82,7 +84,7 @@ public class Market {
 		System.out.println("\t3.Remove Item");
 		System.out.println("\t4.Cancel Sale");
 //		System.out.println("\t5.Add Shelf Level");
-		System.out.println("\t6.Set Replenish Level On Shelf");
+		System.out.println("\t6.Print Supply Report");
 		System.out.println("\t7.Print Current Sales Report");
 		System.out.println("\t8.Print product generating most revenue");
 		System.out.println("\t9.Set Product Details");
@@ -307,6 +309,7 @@ public class Market {
 			System.out.println("2.Edit Product Discount Rate");
 			System.out.println("3.Set Product Whole Sale Quantity");
 			System.out.println("4.Set Product Whole Sale Price");
+			System.out.println("5.Set Replenish Level");
 			System.out.print("Enter your choice");
 			int a=scan.nextInt();
 			switch (a){
@@ -349,6 +352,16 @@ public class Market {
 					}
 				}
 				setWholeSalePrice();
+				break;
+			case 5 : 
+				System.out.println("Please enter product name: ");
+				name=scan.next();
+				for(int i=0;i<prods.size();i++){
+					if(prods.get(i).getName().compareTo(name)==0){
+						this.product=prods.get(i);
+					}
+				}
+				((Manager) employee).setReplenishLevel(product);
 				break;
 			}
 		}
