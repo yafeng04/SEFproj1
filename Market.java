@@ -17,6 +17,8 @@ public class Market {
 	Market(){
 		custs.add(new Customer("Ashley",1,100));
 		custs.add(new Customer("Oliver",2,0));
+		custs.add(new Customer("Bob",3,0));
+		custs.add(new Customer("Charlie",4,0));
 		emps.add(new Manager("Shaun","1","pass"));
 		emps.add(new WarehouseStaff("Ray","007","pass"));
 		emps.add(new SalesStaff("David","3","pass"));
@@ -24,6 +26,10 @@ public class Market {
 		prods.add(new Product(1,"Apple",10000,2.0));
 		prods.add(new Product(2,"Banana",10000,1.5));
 		prods.add(new Product(3,"Coke",20000,1.8));
+		prods.add(new Product(4,"Donut",20000,3));
+		prods.add(new Product(5,"Egg",20000, 4));
+		prods.add(new Product(6,"Chips",20000,3.5));
+		
 		for(int i=0;i<prods.size();i++){
 			prods.get(i).setShelfQty(2000);
 			prods.get(i).setWholesaleItemQty(2000);
@@ -381,7 +387,7 @@ public class Market {
 	    else {
 		for(int i=0;i<sales.size();i++){
 //		if((Math.floor(sales.get(i).ID/1000)>=startdate)&&(Math.floor(sales.get(i).ID)<=enddate))
-			if((sales.get(i).ID>=startdate)&&(sales.get(i).ID<=enddate))
+			if((Math.floor(sales.get(i).ID)>=startdate)&&(Math.floor(sales.get(i).ID)<=enddate+1000))
 		{
 			System.out.println("Sale " + sales.get(i).ID);
 	          sales.get(i).print();
