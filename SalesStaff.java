@@ -1,4 +1,5 @@
-package market2;
+
+package marketsss;
 import java.util.*;
 
 public class SalesStaff extends Employee{

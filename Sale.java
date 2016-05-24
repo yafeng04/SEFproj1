@@ -1,4 +1,4 @@
-package market2;
+package marketsss;
 import java.util.*;
 class Sale 
 {
@@ -12,6 +12,10 @@ class Sale
    public int getID(){ 
 	   return ID; 
    }
+   
+   public void setID(int id){
+	   this.ID=id;
+   }
 
    public double getRealTP(){
 	   return realTP;
@@ -23,15 +27,16 @@ class Sale
 
    public void print()
    {
-      computeTotalPrice();
+//      computeTotalPrice();
       System.out.printf("%-20s %-20s\n","ID",ID);
       System.out.printf("%-20s %-20s\n","Customer",c.getName());
+      System.out.printf("\n%-20s %-20s\n","total price",realTP);
       for (int i=0; i<list.size(); i++)        
     	  list.get(i).print();
-      System.out.printf("\n%-20s %-20s\n","total price",realTP);
+
    }
    
-   public Sale(int ID,Customer c,Product ps[],int qtys[]) //input are arrays, create array first before  creating sale 
+   public Sale(int ID,Customer c,Product ps[],int qtys[]) 
    {
        this.ID = ID;
        this.c = c; 
@@ -43,22 +48,36 @@ class Sale
 
    public Sale(Customer c, ArrayList<Product> pList)
    {    
+	    this.c=c;
         int i;  
-        String response;       
+        String response;   
         do{
+            boolean test=true;
         	System.out.println("\tProduct ID\tProduct Name\tUnit Price\tQuantity Left");
     		for(i=0;i<pList.size();i++){
     			System.out.println("\t"+pList.get(i).getID()+"\t\t"+pList.get(i).getName()+"\t\t"+pList.get(i).getItemPrice()+"\t\t"+pList.get(i).getShelfQty());
     		}
-//        	for(i=0;i<pList.size();i++)
-//        		System.out.println("   "+ (i+1)+ "   "+ pList.get(i).getName());
         	do{      
         		System.out.print("Enter Product ID : ");
         		i=scan.nextInt();
            }while(i<1||i>pList.size());
            System.out.print("Enter qty : ");
            int qty=scan.nextInt();
+           for(int j=0;j<this.list.size();j++){
+        	   if(i==list.get(j).getProduct().getID()){
+        		   list.get(j).quantity+=qty;
+        	   test=false;}
+           }
+           if(test){
+           if(qty<=pList.get(i-1).getShelfQty()){
            list.add(new SalesLineItem(pList.get(i-1),qty,this));
+           } else{
+        	   	  System.out.println("Not enough quantitie left, try to buy everthing.");
+        	   	  qty=pList.get(i-1).getShelfQty();
+        	   	  list.add(new SalesLineItem(pList.get(i-1),qty,this));
+           		 }
+           }
+           pList.get(i-1).setLeftShelfQty(qty);
            scan.nextLine();
            System.out.print("Any more items ? : Y/N");
            response = scan.nextLine();
@@ -70,18 +89,14 @@ class Sale
            for(int i=0;i<list.size();i++){
         	   totalPrice+=list.get(i).getPrice();
         	   list.get(i).getProduct().totalRevenue+=list.get(i).getPrice();
-        	   list.get(i).getProduct().setLeftQuantity(this);
+//        	   list.get(i).getProduct().setLeftQuantity(this);
            }
            
-//add price*unitPrice: product.getPrice(); will calculate wholesale price itself
-//           this.totalPrice = getDisVal(totalPrice); //
    }
    public void realTotalPrice(Customer c){
 	   int validPoint=c.getValidPoint();
 	   computeTotalPrice();
 	   this.realTP=this.totalPrice-validPoint/4;
-//	   double LP2=c.getLoyaltyPoint(c);
-//	   
    }
    
    public double getTotalPrice() {
@@ -103,7 +118,4 @@ class Sale
 			}				
 		}
 	}
-//   public void cancel()
-//  
 }
-

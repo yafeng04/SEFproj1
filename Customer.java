@@ -1,4 +1,4 @@
-package market2;
+package marketsss;
 
 public class Customer {
 	private String name;

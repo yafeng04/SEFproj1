@@ -89,22 +89,23 @@
 //			return unitPrice * amt * rate;
 //	}
 //}
-package market2;
+package marketsss;
 import java.util.*;
 
 public class Product {
 	private int ID;
 	private String name;
-	public int shelfQty;
+	private int shelfQty;
 	private int stockQty;
-	private int replenishLevel=30;
+	private int replenishLevel=500;
 	private double itemPrice;
 	private double disc;
-	private int totalOrder=0;
+	public int totalOrder=shelfQty+stockQty;
 	private ArrayList<SalesLineItem> salesLines = new ArrayList<SalesLineItem>();
 	private double wholesaleItemPrice;
 	private int wholesaleItemQty;
 	public double totalRevenue;
+	private int newSupp=5000;
 
 	public Product(int id,String name, double itemPrice, int quantity1, int quantity2, double wholesaleItemPrice,
 			int wholesaleItemQty) {
@@ -133,25 +134,19 @@ public class Product {
 		this.replenishLevel=qty;
 		return replenishLevel;
 	}
-	public void setStock(int amount1){
-		{
-			double amount=amount1;
-			Scanner reader=new Scanner(System.in);
-			do{     
-				System.out.println("Not enough items on shelf, current total amount is "+ this.shelfQty);
-				amount=reader.nextDouble();
-//			else{	
-//			System.out.println("There are not enough items left, try to buy all items");
-//			shelfQty=0;
-			}while(amount>shelfQty);
-			this.shelfQty -= amount;
-			if(this.shelfQty==0){
-				this.shelfQty=100;
-				this.stockQty-=100;
+	public void setStock(){
+		{	
+			if(this.shelfQty<this.replenishLevel){
+				this.stockQty-=(2000-this.shelfQty);
+				this.shelfQty=2000;
 			}
-			if(this.stockQty<=200){
+	
+			if(this.stockQty<=2000){
 				System.out.println("stock level low, reorder now, current stock amount is "+ this.stockQty);
-				this.reorder(800);//automatically reorder if below 200 and replenish the stock to 1000
+				this.reorder();
+				System.out.println("system automatically reordered, current stock amount is "+ this.stockQty);
+				
+				//automatically reorder if below 200 and replenish the stock to 1000
 			}
 		}
 	}
@@ -173,14 +168,14 @@ public class Product {
 	}
 	
 	public double getDisc() {
-		return disc;
+		return (1-disc)*100;
 	}
 
 	public void setDisc(double disc) {
 		this.disc = disc;
 	}
 
-	public double getShelfQty() {
+	public int getShelfQty() {
 		return shelfQty;
 	}
 
@@ -188,13 +183,13 @@ public class Product {
 		this.shelfQty = shelfQty;
 	}
 
-	public double getStockQty() {
+	public int getStockQty() {
 		return stockQty;
 	}
 
-	public void setStockQty(int stockQty) {
-		this.stockQty = stockQty;
-	}
+//	public void setStockQty(int stockQty) {
+//		this.stockQty = stockQty;
+//	}
 
 	public double getWholesaleItemPrice() {
 		return wholesaleItemPrice;
@@ -214,10 +209,6 @@ public class Product {
 
 	public String getName() {
 		return name;
-	}
-
-	public double getQuantity() {
-		return this.stockQty;
 	}
 
 	public void setQuantity(int quantity) {
@@ -240,7 +231,7 @@ public class Product {
 		salesLines.add(saleLine);
 	}
 	
-	public void reorder(double newSupp){
+	public void reorder(){
 		this.stockQty+=newSupp;
 		this.totalOrder+=newSupp;
 	}
@@ -251,38 +242,19 @@ public class Product {
 		else
 			return itemPrice*amt*disc;
 	}
-	
-	public void setStock(double amount1){
-		{
-			double amount=amount1;
-			Scanner reader=new Scanner(System.in);
-			do{     
-				System.out.println("Not enough items on shelf, current total amount is "+ this.shelfQty);
-				amount=reader.nextDouble();
-//			else{	
-//			System.out.println("There are not enough items left, try to buy all items");
-//			shelfQty=0;
-			}while(amount>shelfQty);
-			this.shelfQty -= amount;
-			if(this.shelfQty==0){
-				this.shelfQty=100;
-				this.stockQty-=100;
-			}
-			if(this.stockQty<=200){
-				System.out.println("stock level low, reorder now, current stock amount is "+ this.stockQty);
-				this.reorder(800);//automatically reorder if below 200 and replenish the stock to 1000
-			}
-		}
+
+	public void setLeftShelfQty(int amount){
+		if(this.shelfQty>=amount)
+		this.shelfQty-=amount;
 	}
 
-
-	public void setLeftQuantity(Sale s){
-		double amount;
-		for (int i=0; i<s.list.size(); i++){
-			if(s.list.get(i).getProduct().getName().compareTo(this.name) == 0)
-				{amount=s.list.get(i).quantity;
-				this.setStock(amount);
-				}
-		}
-	}
+//	public void setLeftQuantity(Sale s){
+//		double amount;
+//		for (int i=0; i<s.list.size(); i++){
+//			if(s.list.get(i).getProduct().getID() == ID)
+//				{amount=s.list.get(i).quantity;
+//				this.setStock(amount);
+//				}
+//		}
+//	}
 }
