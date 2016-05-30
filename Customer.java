@@ -55,7 +55,6 @@ public class Customer {
 	}
 	
 	public void setLoyaltyPoint(Sale s) {
-//		s.computeTotalPrice();
 		int minusPoint;
 		if(this.getLoyaltyPoint()>=20){
 				minusPoint=(int)(s.getRealTP()/5)*20;
