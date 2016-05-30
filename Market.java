@@ -204,7 +204,8 @@ public class Market {
 		if(sale!=null){
 		if(employee instanceof SalesStaff||employee instanceof Manager ){
 			System.out.print("Please enter the product name you want to remove from this shopping: ");
-			String name=scan.nextLine();
+			Scanner reader= new Scanner(System.in);
+			String name=reader.nextLine();
 			int i;
 			for (i=0;i<sale.list.size();i++){
 				if(sale.list.get(i).getProduct().getName().compareTo(name)==0)
