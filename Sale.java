@@ -27,7 +27,6 @@ class Sale
 
    public void print()
    {
-//      computeTotalPrice();
       System.out.printf("%-20s %-20s\n","ID",ID);
       System.out.printf("%-20s %-20s\n","Customer",c.getName());
       System.out.printf("\n%-20s %-20s\n","total price",realTP);
@@ -89,7 +88,6 @@ class Sale
            for(int i=0;i<list.size();i++){
         	   totalPrice+=list.get(i).getPrice();
         	   list.get(i).getProduct().totalRevenue+=list.get(i).getPrice();
-//        	   list.get(i).getProduct().setLeftQuantity(this);
            }
            
    }
