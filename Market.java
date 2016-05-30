@@ -12,7 +12,7 @@ public class Market {
 	private Customer customer=null;
 	private Sale sale=null;
 	private double max=0;
-//	private int dateID=160523000;
+
 	
 	Market(){
 		custs.add(new Customer("Ashley",1,100));
@@ -83,7 +83,6 @@ public class Market {
 		System.out.println("\t2.Check Stock Level");
 		System.out.println("\t3.Remove Item");
 		System.out.println("\t4.Cancel Sale");
-//		System.out.println("\t5.Add Shelf Level");
 		System.out.println("\t6.Print Supply Report");
 		System.out.println("\t7.Print Current Sales Report");
 		System.out.println("\t8.Print product generating most revenue");
@@ -163,7 +162,7 @@ public class Market {
 			for(int j=0;j<prods.size();j++){
 				if(prods.get(j).getID()==i){
 					System.out.println("If your purchasing quantities greater than "+prods.get(i-1).getWholesaleItemQty()+" : ");
-					System.out.print("The product "+prods.get(i-1).getName()+" will have a "+(float)(prods.get(i-1).getDisc())+"% discount.");
+					System.out.print("The product "+prods.get(i-1).getName()+" will have a "+(prods.get(i-1).getItemPrice()-prods.get(i-1).getWholesaleItemPrice())/prods.get(i-1).getItemPrice()*100+ "% discount.");
 				}else if(i>prods.size()){
 					System.out.println("Product ID "+(i-1)+" doesn't exsit. Please enter again.");
 				}
@@ -200,30 +199,12 @@ public class Market {
 		else{System.out.println("login first !!");}
 	}
 	
-//	public void addShelfLevel(){
-//		if(employee instanceof Manager || employee instanceof SalesStaff){
-//			System.out.print("Please enter the product id : ");
-//			int n=scan.nextInt();
-//			if(n<=prods.size()){
-//				System.out.print("Please enter the qty you want to add into shelf :");
-//				int m=scan.nextInt();
-//				if(m<=prods.get(n-1).getStockQty()){
-//					prods.get(n-1).setShelfQty(prods.get(n-1).getShelfQty()+m);
-//					prods.get(n-1).setStockQty(prods.get(n-1).getStockQty()-m);
-//				}
-//			}
-//		}
-//	}
 	
 	public void remove(){
 		if(sale!=null){
 		if(employee instanceof SalesStaff||employee instanceof Manager ){
-//			System.out.print("Please enter the target sale ID: ");
-//			int i=scan.nextInt();
 			System.out.print("Please enter the product name you want to remove from this shopping: ");
 			String name=scan.nextLine();
-//			if(i<sales.size()+1&&i>0)
-//			sales.get(i-1).remove(name);
 			int i;
 			for (i=0;i<sale.list.size();i++){
 				if(sale.list.get(i).getProduct().getName().compareTo(name)==0)
@@ -273,7 +254,6 @@ public class Market {
 						if(before!=after){System.out.println("shelf replenishment finished by warehouse staff");}
 					}
 					this.sale=null;
-//					this.customer=null;
 					
 				}
 				else{
@@ -399,15 +379,12 @@ public class Market {
 	         System.out.println("No current sales");
 	    else {
 		for(int i=0;i<sales.size();i++){
-//		if((Math.floor(sales.get(i).ID/1000)>=startdate)&&(Math.floor(sales.get(i).ID)<=enddate))
 			if((Math.floor(sales.get(i).ID)>=startdate)&&(Math.floor(sales.get(i).ID)<=enddate+1000))
 		{
 			System.out.println("Sale " + sales.get(i).ID);
 	          sales.get(i).print();
 	         partialRevenue+=sales.get(i).realTP;
 			salesnum+=1;
-//			 System.out.println("\nPress enter to continue");
-//	          scan.nextLine();
 		}
 		}
 		if(salesnum==0){System.out.println("No sale in between those dates");}
@@ -461,8 +438,6 @@ public class Market {
 		if(i==emps.size()){
 			System.out.println("Username or Password Wrong!");
 		}
-////		System.out.println("Please enter to continue.");
-//		scan.nextLine();
 	}
 	
 	public void logout(){
@@ -510,7 +485,6 @@ public class Market {
 					case 2 : checkProduct();break;
 					case 3 : remove();break;
 					case 4 : cancel();break;
-//					case 5 : addShelfLevel();break;
 					case 6 : supplyReport();break;
 					case 7 : 
 						System.out.print("Enter startdate (YY/MM/DD):");
