@@ -20,7 +20,7 @@ public class Customer {
 		this.name=name;
 		this.ID=ID;
 		this.loyaltyPoint=point;
-		this.balance=0;
+		this.balance=10;
 	}
 	public String getName() {
 		return name;
